@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Figma__get_metadata",
+      "Bash(grep -o 'type=\"SECTION\"[^>]*' C:/Users/damit/.claude/projects/c--Users-damit-OneDrive-Documents-Fancrest-site/225e7081-b8c3-4f0a-9b9a-b629a7862274/tool-results/mcp-claude_ai_Figma-get_metadata-1786737974238.txt)",
+      "Bash(grep -nE '^    <\\(frame|section\\)' C:/Users/damit/.claude/projects/c--Users-damit-OneDrive-Documents-Fancrest-site/225e7081-b8c3-4f0a-9b9a-b629a7862274/tool-results/mcp-claude_ai_Figma-get_metadata-1786737974238.txt)",
+      "Bash(sed 's/\\\\\\\\\"/\"/g')"
+    ]
+  }
+}

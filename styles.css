@@ -1,0 +1,1854 @@
+/* =====================================================================
+   Fancrest — Home
+   Built from Figma: file 5HPvo4VsJf4KyCclDXENmG
+   Section "fancrest  with illustration" › frame "Home" (node 105:8652)
+   Desktop reference width 1440. Mobile breakpoint at max-width 768px.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   Theme tokens
+   Colours below mirror the Figma colour variables 1:1. Never hardcode a
+   hex value in a rule — add or reuse a token here instead.
+   --------------------------------------------------------------------- */
+:root {
+  /* Figma variables — color/* */
+  --color-navy:       #0f172a;
+  --color-red-cta:    #c8102e;  /* CTA buttons only */
+  --color-card:       #ffffff;
+  --color-border:     #e2e8f0;
+  --color-muted:      #e8ecf1;
+  --color-muted-fg:   #64748b;
+  --color-foreground: #020617;
+  --color-background: #f8fafc;
+  --color-success:    #059669;  /* WhatsApp / primary contact method */
+
+  /* Canvas fill of the Home frame (local frame fill, not a published variable) */
+  --color-page: #f5fafc;
+
+  /* Type */
+  --font-heading: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Layout */
+  --nav-h: 91px;
+  --gutter: 64px;
+  --section-y: 96px;
+  --content-max: 1312px;  /* 1440 frame minus the 64px gutters */
+  --radius-card: 10px;
+  --radius-btn: 6px;
+
+  /* Card elevation used on the Loans page (navy at 8%) */
+  --shadow-card: 0 2px 12px rgba(15, 23, 42, .08);
+
+  /* Panel elevation used on the Services illustration panels and photo */
+  --shadow-panel: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .1);
+}
+
+/* ---------------------------------------------------------------------
+   Reset / base
+   --------------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding-top: var(--nav-h);       /* clears the fixed nav */
+  background: var(--color-page);
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p, dl, dd, figure { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+img { display: block; max-width: 100%; }
+address { font-style: normal; }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--color-red-cta);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------------
+   Layout primitives
+   --------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+.section {
+  padding: var(--section-y) var(--gutter);
+}
+
+/* 2px top rule used between several bands */
+.section-rule { border-top: 2px solid var(--color-border); }
+
+.section-head { margin-bottom: 40px; }
+
+/* ---------------------------------------------------------------------
+   Shared type
+   --------------------------------------------------------------------- */
+.eyebrow {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.12px;
+  color: var(--color-red-cta);
+}
+
+.overline {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.96px;
+  color: var(--color-muted-fg);
+}
+
+.h2 {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.8px;
+  color: var(--color-navy);
+}
+
+.h3 {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.56px;
+  color: var(--color-navy);
+}
+
+.body-text { color: var(--color-foreground); }
+.body-strong { font-weight: 600; color: var(--color-navy); }
+
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+/* ---------------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 28px;
+  border-radius: var(--radius-btn);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color .18s ease, border-color .18s ease, opacity .18s ease;
+}
+
+.btn-primary {
+  background: var(--color-red-cta);
+  color: var(--color-card);
+  border: 1.5px solid var(--color-red-cta);
+}
+.btn-primary:hover { opacity: .9; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-card);
+  border: 1.5px solid var(--color-muted-fg);
+}
+.btn-ghost:hover { border-color: var(--color-card); }
+
+/* Outlined button for light backgrounds (sticky mobile bar) */
+.btn-outline {
+  background: transparent;
+  color: var(--color-navy);
+  border: 1.5px solid var(--color-border);
+}
+.btn-outline:hover { border-color: var(--color-muted-fg); }
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* ---------------------------------------------------------------------
+   Nav — fixed to the top of the page
+   --------------------------------------------------------------------- */
+.site-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: var(--nav-h);
+  padding: 0 var(--gutter);
+  background: var(--color-card);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+.nav-logo { flex-shrink: 0; }
+
+.nav-logo img {
+  width: 81px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 16px;
+}
+
+.nav-links a {
+  color: var(--color-muted-fg);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-links a:hover { color: var(--color-navy); }
+
+.nav-links .is-current {
+  color: var(--color-navy);
+  font-weight: 600;
+}
+
+.btn-nav {
+  padding: 14px 24px;
+  font-size: 15px;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Hamburger — 44x44 hit target, revealed below 768px */
+.nav-burger {
+  display: none;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  background: var(--color-card);
+  cursor: pointer;
+}
+
+.burger-bars,
+.burger-bars::before,
+.burger-bars::after {
+  position: absolute;
+  left: 50%;
+  width: 20px;
+  height: 2px;
+  margin-left: -10px;
+  background: var(--color-navy);
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.burger-bars {
+  top: 50%;
+  margin-top: -1px;
+}
+
+.burger-bars::before,
+.burger-bars::after {
+  content: "";
+  left: 0;
+  margin-left: 0;
+}
+
+.burger-bars::before { top: -6px; }
+.burger-bars::after  { top: 6px; }
+
+/* Bars morph into a cross while the panel is open */
+.site-nav.is-open .burger-bars { background: transparent; }
+.site-nav.is-open .burger-bars::before { transform: translateY(6px) rotate(45deg); }
+.site-nav.is-open .burger-bars::after  { transform: translateY(-6px) rotate(-45deg); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------
+   Sticky action bar — mobile only, shown at the 768px breakpoint
+   --------------------------------------------------------------------- */
+.mobile-bar { display: none; }
+
+/* ---------------------------------------------------------------------
+   Hero
+   --------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  padding: 200px var(--gutter);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    131.2deg,
+    rgba(0, 0, 0, .571) 27.573%,
+    rgba(0, 0, 0, .442) 56.012%,
+    rgba(0, 0, 0, .68)  92.622%
+  );
+}
+
+/* Copy sits in the shared container so it stays flush with every other
+   band's left edge; the 900px cap reproduces the frame's copy column. */
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.hero-inner > * { max-width: 900px; }
+
+.eyebrow-on-dark { color: var(--color-red-cta); }
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -1.44px;
+  color: var(--color-card);
+}
+
+.hero-sub {
+  max-width: 708px;
+  font-size: 16px;
+  color: var(--color-border);
+}
+
+/* ---------------------------------------------------------------------
+   Trust strip
+   --------------------------------------------------------------------- */
+.trust-strip {
+  background: var(--color-card);
+  padding: 40px var(--gutter);
+}
+
+.trust-grid {
+  display: flex;
+  gap: 24px;
+}
+
+.trust-item {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trust-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.trust-desc { color: var(--color-muted-fg); }
+
+/* ---------------------------------------------------------------------
+   Rate transparency
+   --------------------------------------------------------------------- */
+.rate-grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 64px;
+}
+
+.rate-copy {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rate-headline {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rate-figure {
+  font-family: var(--font-heading);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-navy);
+}
+
+.rate-note { color: var(--color-muted-fg); }
+
+.example-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 36px;
+}
+
+.example-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.example-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.example-label { color: var(--color-muted-fg); }
+
+.example-value {
+  font-weight: 500;
+  color: var(--color-foreground);
+  text-align: right;
+}
+
+.example-row-total { color: var(--color-navy); }
+
+.example-label-total {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.example-value-total {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: right;
+}
+
+/* ---------------------------------------------------------------------
+   How to get started
+   --------------------------------------------------------------------- */
+.steps { background: var(--color-muted); }
+
+.section-head .eyebrow { margin-bottom: 12px; }
+
+.steps-grid {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+}
+
+.step {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 24px;
+}
+
+.step-num {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.64px;
+  color: var(--color-red-cta);
+}
+
+.step-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.step-desc { color: var(--color-muted-fg); }
+
+/* ---------------------------------------------------------------------
+   What we lend
+   --------------------------------------------------------------------- */
+.lend { background: var(--color-card); }
+
+.detail-grid { display: flex; }
+
+.detail {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 24px 24px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.detail dd { margin: 0; }
+
+.detail-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+/* ---------------------------------------------------------------------
+   Why choose Fancrest
+   --------------------------------------------------------------------- */
+.why-grid {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+}
+
+.why-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 24px;
+}
+
+.why-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.why-desc { color: var(--color-muted-fg); }
+
+/* ---------------------------------------------------------------------
+   Beyond lending
+   --------------------------------------------------------------------- */
+.beyond {
+  background: var(--color-card);
+  padding-block: 72px;
+}
+
+.beyond .h3 { margin-bottom: 20px; }
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chip {
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--color-muted);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-navy);
+}
+
+/* ---------------------------------------------------------------------
+   Closing CTA
+   --------------------------------------------------------------------- */
+.closing-cta {
+  background: var(--color-navy);
+  padding: 88px var(--gutter);
+}
+
+.closing-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+
+.closing-inner .btn-row { justify-content: center; }
+
+.closing-title {
+  font-family: var(--font-heading);
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.76px;
+  color: var(--color-card);
+}
+
+.closing-sub {
+  font-size: 18px;
+  color: var(--color-border);
+}
+
+/* ---------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------- */
+.site-footer {
+  background: var(--color-foreground);
+  padding: 64px var(--gutter) 40px;
+}
+
+.footer-columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 64px;
+  margin-bottom: 40px;
+}
+
+.footer-brand,
+.footer-col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Footer lockup crops into the logo mark, matching the frame's image fill */
+.footer-logo {
+  position: relative;
+  display: block;
+  width: 73px;
+  height: 36px;
+  overflow: hidden;
+}
+
+.footer-logo img {
+  position: absolute;
+  left: -38.66%;
+  top: -38.1%;
+  width: 180.49%;
+  height: 243.81%;
+  max-width: none;
+}
+
+.footer-company {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-border);
+}
+
+.footer-tagline {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-muted-fg);
+}
+
+.footer-coop {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-red-cta);
+}
+
+.footer-col a,
+.footer-address,
+.footer-line {
+  font-size: 15px;
+  color: var(--color-border);
+  text-decoration: none;
+}
+
+.footer-col a:hover { text-decoration: underline; }
+
+.footer-bottom {
+  padding-top: 24px;
+  border-top: 1px solid var(--color-muted-fg);
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  color: var(--color-muted-fg);
+}
+
+/* =====================================================================
+   Loans page
+   Figma: section "fancrest  with illustration" › frame "Loans" (105:8340)
+   Everything above is shared; only the bands unique to Loans live here.
+   ===================================================================== */
+
+/* Loans paints its canvas with the published background token, and sets
+   its section rhythm 8px tighter than Home */
+.page-loans {
+  background: var(--color-background);
+  --section-y: 88px;
+}
+
+/* Inner-page heading sizes — Loans sets its section headings 2px smaller
+   than Home, and its two-column subheads run tighter */
+.h2-md { font-size: 38px; letter-spacing: -0.76px; }
+.h3-tight { line-height: 1.2; }
+
+.stack-24,
+.stack-32 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.stack-24 { gap: 24px; }
+.stack-32 { gap: 32px; }
+
+/* --- Hero: copy beside an at-a-glance card ------------------------------ */
+.hero-split { padding-block: 96px; }
+
+.hero-split .hero-scrim {
+  background: linear-gradient(
+    137.52deg,
+    rgba(0, 0, 0, .571) 27.573%,
+    rgba(0, 0, 0, .442) 56.012%,
+    rgba(0, 0, 0, .68)  92.622%
+  );
+}
+
+.hero-split-grid {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+}
+
+.hero-copy {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.hero-title-md {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.96px;
+  color: var(--color-card);
+}
+
+.glance-card {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 32px;
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.glance-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.glance-label {
+  font-size: 15px;
+  color: var(--color-muted-fg);
+}
+
+.glance-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-navy);
+  text-align: right;
+}
+
+/* --- Membership explainer ----------------------------------------------- */
+.membership {
+  background: var(--color-muted);
+  padding: 44px var(--gutter);
+}
+
+.membership-inner {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.membership-copy {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.membership .btn {
+  flex-shrink: 0;
+  padding: 16px 24px;
+}
+
+/* --- Who we lend to ------------------------------------------------------ */
+.type-grid {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+}
+
+.type-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 26px;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Both lines run at 20px in the frame */
+.type-title,
+.type-desc { font-size: 20px; }
+
+.type-title {
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.type-desc { color: var(--color-muted-fg); }
+
+/* --- Rate and terms ------------------------------------------------------ */
+.rate-terms { background: var(--color-background); }
+
+.examples-grid {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+}
+
+.example-card-sm {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 32px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+/* Loans sets this in the body face, unlike the Home worked example */
+.example-title-sm {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.example-row-sm {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 14px;
+}
+
+.example-row-sm .example-label-total { font-size: 14px; }
+.example-row-sm .example-value-total { font-size: 18px; }
+
+.note-strong {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-navy);
+}
+
+/* --- Collateral and requirements ----------------------------------------- */
+.collateral-grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+  width: 100%;
+}
+
+.collateral-col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 32px;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.spec-term {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.spec-desc {
+  font-size: 14px;
+  color: var(--color-muted-fg);
+}
+
+/* --- FAQ ------------------------------------------------------------------ */
+.faq { background: var(--color-background); }
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.faq-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faq-q {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.faq-a { color: var(--color-muted-fg); }
+
+/* =====================================================================
+   Services page
+   Figma: section "fancrest  with illustration" › frame "services" (105:8803)
+   ===================================================================== */
+
+.page-services { background: var(--color-card); }
+
+/* --- Centred hero -------------------------------------------------------- */
+.hero-center { padding-block: 96px; }
+
+.hero-center .hero-scrim {
+  background: linear-gradient(
+    151.19deg,
+    rgba(0, 0, 0, .571) 27.573%,
+    rgba(0, 0, 0, .442) 56.012%,
+    rgba(0, 0, 0, .68)  92.622%
+  );
+}
+
+.hero-center-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  text-align: center;
+}
+
+.hero-title-lg {
+  max-width: 720px;
+  font-family: var(--font-heading);
+  font-size: 80px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -1.6px;
+  color: var(--color-card);
+}
+
+.hero-center-inner .hero-sub { max-width: 720px; }
+
+/* --- Alternating service bands ------------------------------------------- */
+/* Inline padding and container width come from the shared tokens so the
+   bands line up with the nav, footer and every other page. The Figma frame
+   insets these bands to 100px against 64px elsewhere; that inconsistency is
+   deliberately not reproduced. */
+.service-band { padding: 80px var(--gutter); }
+
+.band-white { background: var(--color-card); }
+.band-muted { background: var(--color-muted); }
+
+.service-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+.service-copy {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.service-title {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.4px;
+  color: var(--color-navy);
+}
+
+/* Lending sets its heading smaller than the five that follow */
+.service-title-sm {
+  font-size: 32px;
+  letter-spacing: -0.32px;
+}
+
+.service-desc {
+  font-size: 17px;
+  color: var(--color-muted-fg);
+}
+
+.service-desc-sm { font-size: 16px; }
+
+.service-link {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-red-cta);
+  text-decoration: none;
+}
+
+.service-link:hover { text-decoration: underline; }
+
+/* Illustration panel — holds an exported SVG at its designed 420x298 */
+.illus-panel {
+  flex-shrink: 0;
+  width: 476px;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-panel);
+}
+
+.illus-panel img {
+  width: 420px;
+  height: 298px;
+}
+
+/* Panel sits in the opposite tone to its band */
+.band-white .illus-panel { background: var(--color-muted); }
+.band-muted .illus-panel { background: var(--color-card); }
+
+/* Lending keeps the real office photograph rather than an illustration */
+.service-photo {
+  flex-shrink: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: var(--shadow-panel);
+}
+
+.service-photo img {
+  width: 468px;
+  height: 352px;
+  object-fit: cover;
+}
+
+/* Loan facts under the Lending copy */
+.fact-list { width: 100%; }
+
+.fact-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.fact-label {
+  font-size: 14px;
+  color: var(--color-muted-fg);
+}
+
+.fact-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-navy);
+  text-align: right;
+}
+
+.btn-compact {
+  padding: 15px 26px;
+  font-size: 15px;
+}
+
+/* =====================================================================
+   About page
+   Figma: section "fancrest  with illustration" › frame "About" (105:8212)
+   ===================================================================== */
+
+.page-about {
+  background: var(--color-background);
+  --section-y: 88px;
+}
+
+/* --- Who we are ---------------------------------------------------------- */
+.about-grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 64px;
+  width: 100%;
+}
+
+.about-copy {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.about-lead { color: var(--color-foreground); }
+
+.about-close {
+  font-weight: 500;
+  color: var(--color-navy);
+}
+
+.about-photo { flex-shrink: 0; }
+
+.about-photo img {
+  width: 531px;
+  height: 400px;
+  object-fit: cover;
+}
+
+/* --- Mission and vision -------------------------------------------------- */
+.mv-row {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+}
+
+.mv-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 32px;
+}
+
+.mv-title {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.mv-desc { color: var(--color-muted-fg); }
+
+/* --- What we stand for (navy band) --------------------------------------- */
+.values-band { background: var(--color-navy); }
+
+.values-title {
+  width: 100%;
+  color: var(--color-card);
+  text-align: center;
+}
+
+.values-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+}
+
+.value-item {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+/* Each icon keeps its own exported dimensions — set per <img>, never here */
+.value-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid var(--color-red-cta);
+  border-radius: 8px;
+}
+
+.value-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-card);
+}
+
+.value-desc {
+  font-size: 14px;
+  color: var(--color-border);
+}
+
+/* --- What we do ---------------------------------------------------------- */
+.dowhat-grid {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.dowhat-item {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 20px 24px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.dowhat-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.dowhat-desc {
+  font-size: 14px;
+  color: var(--color-muted-fg);
+}
+
+/* --- Credentials --------------------------------------------------------- */
+.cred-row {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+}
+
+.cred-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+}
+
+.cred-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+/* =====================================================================
+   Contact page
+   Figma: section "fancrest  with illustration" › frame "Contact" (105:8544)
+   ===================================================================== */
+
+.page-contact {
+  background: var(--color-background);
+  --section-y: 88px;
+}
+
+.contact-grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 64px;
+  width: 100%;
+}
+
+.contact-col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.contact-h2 {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.64px;
+  color: var(--color-navy);
+}
+
+/* --- WhatsApp, the primary method ---------------------------------------- */
+.method-primary {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+  background: var(--color-background);
+  border: 1.5px solid var(--color-success);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.overline-success { color: var(--color-success); }
+
+.method-title {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.method-desc {
+  font-size: 15px;
+  color: var(--color-muted-fg);
+}
+
+.btn-success {
+  padding: 14px 24px;
+  font-size: 15px;
+  background: var(--color-success);
+  color: var(--color-card);
+  border: 1.5px solid var(--color-success);
+}
+
+.btn-success:hover { opacity: .9; }
+
+/* --- Phone / email / office / hours --------------------------------------- */
+.method-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.method-value {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.method-value a { text-decoration: none; }
+.method-value a:hover { text-decoration: underline; }
+
+.method-note {
+  font-size: 13px;
+  color: var(--color-muted-fg);
+}
+
+/* --- Enquiry form --------------------------------------------------------- */
+.enquiry {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 32px;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.enquiry-title {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.enquiry fieldset {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-foreground);
+}
+
+.field-hint {
+  font-size: 13px;
+  color: var(--color-muted-fg);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 15px 16px;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-foreground);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+}
+
+.textarea {
+  padding-bottom: 60px;
+  resize: vertical;
+}
+
+/* The form has no backend yet. Fields are disabled rather than accepting
+   input that would go nowhere — keep them legible, not washed out. */
+.enquiry fieldset[disabled] .input,
+.enquiry fieldset[disabled] .textarea {
+  opacity: 1;
+  color: var(--color-muted-fg);
+  cursor: not-allowed;
+}
+
+.btn[disabled] {
+  cursor: not-allowed;
+  opacity: .55;
+}
+
+.btn-block {
+  width: 100%;
+  padding: 17px;
+  font-size: 16px;
+}
+
+.form-note {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--color-muted);
+  border-radius: var(--radius-btn);
+  font-size: 14px;
+  color: var(--color-navy);
+}
+
+.form-note a {
+  font-weight: 600;
+  color: var(--color-success);
+}
+
+.enquiry-footnote {
+  font-size: 13px;
+  color: var(--color-muted-fg);
+}
+
+/* --- Map ------------------------------------------------------------------ */
+.map-embed {
+  display: block;
+  width: 100%;
+  height: 450px;
+  border: 0;
+}
+
+.map-caption {
+  padding: 17px 0 16px;
+  background: var(--color-background);
+  border-top: 1px solid var(--color-border);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  color: var(--color-muted-fg);
+  text-align: center;
+}
+
+/* =====================================================================
+   Mobile — max-width 768px
+   No Mobile 375 frame exists in the Figma file, so this breakpoint is
+   derived from the desktop frame: every multi-column band collapses to a
+   single column and the type scale steps down. Tokens and colours are
+   unchanged from desktop.
+   ===================================================================== */
+@media (max-width: 768px) {
+  :root {
+    --nav-h: 96px;
+    --gutter: 20px;
+    --section-y: 56px;
+    --bar-h: 74px;   /* sticky bar height; body reserves exactly this */
+  }
+
+  /* The nav Apply button is hidden below 768px — the sticky bottom bar
+     owns that action on mobile, and dropping it frees the row for the
+     44x44 burger even at 320px. */
+  .btn-nav { display: none; }
+
+  .nav-logo img { width: 65px; height: 32px; }
+
+  /* No-JS fallback: links wrap to a second row so they stay reachable if
+     the toggle script never runs. Replaced by the panel below when it does. */
+  .nav-inner {
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 12px;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  /* Nav, with JS: single row of logo + burger, links become a dropdown panel */
+  html.js { --nav-h: 64px; }
+
+  .js .nav-inner { flex-wrap: nowrap; }
+
+  .js .nav-burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .js .nav-links {
+    display: none;
+    order: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 4px var(--gutter) 12px;
+    background: var(--color-card);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    font-size: 16px;
+    max-height: calc(100vh - var(--nav-h));
+    overflow-y: auto;
+  }
+
+  .js .site-nav.is-open .nav-links { display: flex; }
+
+  .js .nav-links a { padding: 14px 0; }
+  .js .nav-links a + a { border-top: 1px solid var(--color-border); }
+
+  /* Sticky action bar, pinned to the viewport bottom.
+     Height is fixed to --bar-h (border-box, so the border and safe-area
+     inset are included) and the body reserves the identical expression
+     below, so the end of the page can never sit behind it. */
+  .mobile-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 95;
+    height: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px));
+    padding: 0 var(--gutter);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--color-card);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .mobile-bar .btn {
+    min-width: 0;
+    padding: 14px 10px;
+    font-size: 15px;
+  }
+
+  /* Weighted so the longer label still fits its box at 320px */
+  .mobile-bar .btn-primary { flex: 3 1 0; }
+  .mobile-bar .btn-outline { flex: 2 1 0; }
+
+  /* Reserve exactly the bar's height so nothing is obscured at the end of scroll */
+  body { padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px)); }
+
+  /* Hero */
+  .hero { padding: 96px var(--gutter); }
+  .hero-inner { gap: 20px; }
+
+  .hero-title {
+    font-size: 38px;
+    line-height: 1.08;
+    letter-spacing: -0.76px;
+  }
+
+  .hero-sub { font-size: 15px; }
+
+  .btn { padding: 14px 22px; font-size: 15px; }
+  .btn-row { gap: 12px; }
+
+  /* Hero CTAs step down further so they read as actions, not as the
+     hero itself. Still a 44px tap target. */
+  .hero .btn {
+    padding: 11px 18px;
+    font-size: 14px;
+  }
+
+  /* Shared type */
+  .h2 { font-size: 28px; letter-spacing: -0.56px; }
+  .h3 { font-size: 22px; }
+  .section-head { margin-bottom: 28px; }
+
+  /* Every multi-column band stacks */
+  .trust-grid,
+  .rate-grid,
+  .steps-grid,
+  .detail-grid,
+  .why-grid,
+  .footer-columns {
+    flex-direction: column;
+  }
+
+  .trust-strip { padding: 32px var(--gutter); }
+  .trust-grid { gap: 20px; }
+  .trust-title { font-size: 18px; }
+
+  .rate-grid { gap: 32px; }
+  .rate-figure { font-size: 28px; }
+  .example-card { padding: 24px; gap: 16px; }
+
+  .example-row {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .example-value,
+  .example-value-total { font-size: 15px; }
+  .example-value-total { font-size: 18px; }
+
+  .steps-grid,
+  .why-grid { gap: 16px; }
+
+  .detail { padding: 20px 0; }
+
+  .beyond { padding-block: 48px; }
+
+  .closing-cta { padding: 64px var(--gutter); }
+  .closing-title { font-size: 26px; letter-spacing: -0.52px; }
+  .closing-sub { font-size: 16px; }
+
+  .site-footer { padding: 48px var(--gutter) 32px; }
+  .footer-columns { gap: 32px; margin-bottom: 32px; }
+
+  /* ---- Loans page ---- */
+  .page-loans { --section-y: 56px; }
+
+  .h2-md { font-size: 26px; letter-spacing: -0.52px; }
+  .h3-tight { font-size: 22px; }
+
+  .stack-24 { gap: 20px; }
+  .stack-32 { gap: 24px; }
+
+  .hero-split { padding-block: 56px; }
+
+  .hero-split-grid,
+  .type-grid,
+  .examples-grid,
+  .collateral-grid,
+  .membership-inner {
+    flex-direction: column;
+  }
+
+  .hero-split-grid { gap: 32px; align-items: stretch; }
+  .hero-copy { gap: 20px; }
+
+  .hero-title-md {
+    font-size: 32px;
+    line-height: 1.14;
+    letter-spacing: -0.64px;
+  }
+
+  .glance-card { padding: 24px; }
+  .glance-row { padding: 12px 0; }
+  .glance-label { font-size: 14px; }
+  .glance-value { font-size: 15px; }
+
+  .membership { padding: 36px var(--gutter); }
+  .membership-inner { align-items: stretch; gap: 20px; }
+  .membership .btn { align-self: flex-start; }
+
+  .type-grid { gap: 16px; }
+  .type-card { padding: 24px 20px; }
+  .type-title { font-size: 18px; }
+  .type-desc { font-size: 16px; }
+
+  .examples-grid { gap: 16px; }
+  .example-card-sm { padding: 24px; }
+  .example-title-sm { font-size: 18px; }
+
+  .collateral-grid { gap: 32px; }
+  .spec-list { padding: 20px; }
+
+  .faq-item { padding: 18px 0; }
+  .faq-q { font-size: 18px; }
+
+  /* ---- Services page ---- */
+  .hero-center { padding-block: 56px; }
+  .hero-center-inner { gap: 20px; }
+
+  .hero-title-lg {
+    font-size: 34px;
+    line-height: 1.08;
+    letter-spacing: -0.68px;
+  }
+
+  .service-band { padding: 48px var(--gutter); }
+
+  /* Copy always leads on mobile, whichever side the art sits on at desktop */
+  .service-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 28px;
+  }
+
+  .service-copy { order: -1; }
+
+  .service-title { font-size: 26px; letter-spacing: -0.26px; }
+  .service-title-sm { font-size: 24px; }
+  .service-desc { font-size: 16px; }
+
+  /* Art scales to the column while holding its designed aspect ratio */
+  .illus-panel {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .illus-panel img {
+    width: 100%;
+    height: auto;
+    max-width: 420px;
+    aspect-ratio: 420 / 298;
+  }
+
+  .service-photo img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 468 / 352;
+  }
+
+  /* ---- About page ---- */
+  .page-about { --section-y: 56px; }
+
+  .about-grid,
+  .mv-row,
+  .values-row,
+  .dowhat-grid,
+  .cred-row {
+    flex-direction: column;
+  }
+
+  .about-grid { gap: 28px; }
+  .about-copy { gap: 14px; }
+
+  .about-photo img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 531 / 400;
+  }
+
+  .mv-row { gap: 16px; }
+  .mv-card { padding: 24px; }
+  .mv-title { font-size: 20px; }
+
+  .values-row { gap: 28px; }
+  .value-item { padding-top: 0; }
+  .value-name { font-size: 18px; }
+
+  .dowhat-item { padding: 20px 0; }
+
+  .cred-row { gap: 12px; }
+  .cred-card { padding: 20px; }
+
+  /* ---- Contact page ---- */
+  .page-contact { --section-y: 56px; }
+
+  .contact-grid {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .contact-h2 { font-size: 24px; letter-spacing: -0.48px; }
+
+  .method-primary { padding: 20px; }
+  .method-value { font-size: 16px; }
+
+  .enquiry { padding: 20px; gap: 16px; }
+  .enquiry fieldset { gap: 16px; }
+  .enquiry-title { font-size: 20px; }
+
+  .map-embed { height: 300px; }
+
+  .map-caption {
+    padding: 14px var(--gutter) 13px;
+    font-size: 13px;
+    letter-spacing: .4px;
+  }
+}
